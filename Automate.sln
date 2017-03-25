@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automate.WEB", "Automate.WEB\Automate.WEB.csproj", "{FD3BC916-5A22-4561-A5A5-83A3487DA4BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automate.DAL", "Automate.DAL\Automate.DAL.csproj", "{004ACD08-647C-4399-93DB-55FA199A026A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automate.BLL", "Automate.BLL\Automate.BLL.csproj", "{ED989886-2930-44CA-A83C-077976825878}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD3BC916-5A22-4561-A5A5-83A3487DA4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3BC916-5A22-4561-A5A5-83A3487DA4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3BC916-5A22-4561-A5A5-83A3487DA4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3BC916-5A22-4561-A5A5-83A3487DA4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004ACD08-647C-4399-93DB-55FA199A026A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004ACD08-647C-4399-93DB-55FA199A026A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004ACD08-647C-4399-93DB-55FA199A026A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004ACD08-647C-4399-93DB-55FA199A026A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED989886-2930-44CA-A83C-077976825878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED989886-2930-44CA-A83C-077976825878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED989886-2930-44CA-A83C-077976825878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED989886-2930-44CA-A83C-077976825878}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

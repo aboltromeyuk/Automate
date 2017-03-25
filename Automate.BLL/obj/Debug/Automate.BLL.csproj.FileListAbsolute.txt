@@ -1,0 +1,13 @@
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Automate.BLL.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Automate.BLL.pdb
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\AutoMapper.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Automate.DAL.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Ninject.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\EntityFramework.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Automate.DAL.pdb
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\AutoMapper.xml
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\Ninject.xml
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\bin\Debug\EntityFramework.xml
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\obj\Debug\Automate.BLL.csprojResolveAssemblyReference.cache
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\obj\Debug\Automate.BLL.dll
+D:\Git\TestProjectAutomate\Automate\Automate.BLL\obj\Debug\Automate.BLL.pdb

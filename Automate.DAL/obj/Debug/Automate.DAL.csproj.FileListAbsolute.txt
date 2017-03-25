@@ -1,0 +1,10 @@
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\Automate.DAL.dll.config
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\Automate.DAL.dll
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\Automate.DAL.pdb
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\EntityFramework.dll
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\EntityFramework.xml
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\obj\Debug\Automate.DAL.csprojResolveAssemblyReference.cache
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\obj\Debug\Automate.DAL.dll
+D:\Git\TestProjectAutomate\Automate\Automate.DAL\obj\Debug\Automate.DAL.pdb
