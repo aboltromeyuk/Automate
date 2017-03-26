@@ -23,10 +23,20 @@ namespace Automate.WEB.Controllers
 
         public ActionResult Index()
         {
-            var drinks = drinkService.GetDrinks();
+            var allDrinks = drinkService.GetDrinks();
+
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkViewModel>());
 
-            return View(Mapper.Map<IEnumerable<DrinkDTO>, List<DrinkViewModel>>(drinks));
+            return View(Mapper.Map<IEnumerable<DrinkDTO>, List<DrinkViewModel>>(allDrinks));
+        }
+
+        public ActionResult InputMoney()
+        {
+            var allCoins = coinService.GetCoins();
+
+            Mapper.Initialize(cfg => cfg.CreateMap<CoinDTO, CoinViewModel>());
+
+            return PartialView(Mapper.Map<IEnumerable<CoinDTO>, List<CoinViewModel>>(allCoins));
         }
 
         protected override void Dispose(bool disposing)

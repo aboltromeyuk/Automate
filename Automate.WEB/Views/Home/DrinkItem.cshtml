@@ -1,0 +1,19 @@
+﻿@model Automate.WEB.Models.DrinkViewModel
+
+<div class="drinkItem">
+            <div class="imgDrink">
+            <img src=@Html.DisplayFor(model => model.PictureUrl) alt="альтернативный текст"> 
+            </div>
+            @Html.DisplayNameFor(model => model.Name)
+        
+            @Html.DisplayFor(model => model.Name)
+         
+            @Html.DisplayNameFor(model => model.Number)
+        
+            @Html.DisplayFor(model => model.Number)
+        
+            @Html.DisplayNameFor(model => model.Price)
+        
+            @Html.DisplayFor(model => model.Price)
+</div>
+

@@ -22,13 +22,16 @@ namespace Automate.DAL.Repositories
         public void Create(Coin coin)
         {
             db.Coins.Add(coin);
+            db.SaveChanges();
         }
 
         public void Delete(int id)
         {
             Coin coin = db.Coins.Find(id);
+
             if (coin != null)
                 db.Coins.Remove(coin);
+            db.SaveChanges();
         }
 
         public IEnumerable<Coin> Find(Func<Coin, bool> predicate)
@@ -49,6 +52,7 @@ namespace Automate.DAL.Repositories
         public void Update(Coin coin)
         {
             db.Entry(coin).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

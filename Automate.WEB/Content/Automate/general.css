@@ -1,0 +1,18 @@
+﻿body {
+}
+.showcase{
+    width: 400px;
+    margin: auto;
+}
+.drinkItem{
+    margin-bottom: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 100px;
+}
+.imgDrink img{
+    width: 90px;
+    height: 90px;
+}

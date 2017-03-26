@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+@foreach (var coin in Model)
+{
+    if (coin.Blocked)
+    {
+         <input type="button" class="btn btn-default" disabled value=@coin.Nominal />
+    }
+    else
+    {
+         <input type="button" class="btn btn-default" value=@coin.Nominal />
+    }
+}

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
+
+@{
+    ViewBag.Title = "Coins";
+}
+
+<h2>Coins</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCoin")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nominal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Blocked)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nominal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Blocked)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCoin", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteCoin", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
