@@ -29,6 +29,7 @@ namespace Automate.WEB.Util
         {
             kernel.Bind<IDrinkService>().To<DrinkService>();
             kernel.Bind<ICoinService>().To<CoinService>();
+            kernel.Bind<IPictureService>().To<PictureService>();
         }
     }
 }

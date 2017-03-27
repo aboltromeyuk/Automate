@@ -4,6 +4,7 @@ using Automate.BLL.Interfaces;
 using Automate.WEB.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,11 +15,13 @@ namespace Automate.WEB.Controllers
     {
         IDrinkService drinkService;
         ICoinService coinService;
+        IPictureService pictureService;
 
-        public AdminController(IDrinkService drinkServ, ICoinService coinServ)
+        public AdminController(IDrinkService drinkServ, ICoinService coinServ, IPictureService pictureServ)
         {
             drinkService = drinkServ;
             coinService = coinServ;
+            pictureService = pictureServ;
         }
         
         public ActionResult Index(string key)
@@ -163,10 +166,53 @@ namespace Automate.WEB.Controllers
             else return HttpNotFound();
         }
 
+        public ActionResult Pictures()
+        {
+            if ((string)Session["access"] == "true")
+            {
+                var allPictures = pictureService.GetPictures();
+
+                Mapper.Initialize(cfg => cfg.CreateMap<PictureDTO, PictureViewModel>());
+
+                return PartialView(Mapper.Map<IEnumerable<PictureDTO>, List<PictureViewModel>>(allPictures));
+            }
+
+            return HttpNotFound();
+        }
+
+        public ActionResult CreatePicture()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreatePicture(PictureViewModel picture, HttpPostedFileBase uploadImage)
+        {
+            if (ModelState.IsValid && uploadImage != null)
+            {
+                byte[] imageData = null;
+
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+
+                picture.Image = imageData;
+
+                Mapper.Initialize(cfg => cfg.CreateMap<PictureViewModel, PictureDTO>());
+
+                pictureService.Create(Mapper.Map<PictureViewModel, PictureDTO>(picture));
+
+                return View();
+            }
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             drinkService.Dispose();
             coinService.Dispose();
+            pictureService.Dispose();
             base.Dispose(disposing);
         }
     }

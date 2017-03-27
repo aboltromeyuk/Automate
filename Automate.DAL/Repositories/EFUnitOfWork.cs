@@ -14,6 +14,7 @@ namespace Automate.DAL.Repositories
         private AutomateContext db;
         private DrinkRepository drinkRepository;
         private CoinRepository coinRepository;
+        private PictureRepository pictureRepository;
 
         public EFUnitOfWork(string conectionString)
         {
@@ -37,6 +38,16 @@ namespace Automate.DAL.Repositories
                 if (drinkRepository == null)
                     drinkRepository = new DrinkRepository(db);
                 return drinkRepository;
+            }
+        }
+
+        public IRepository<Picture> Pictures
+        {
+            get
+            {
+                if (pictureRepository == null)
+                    pictureRepository = new PictureRepository(db);
+                return pictureRepository;
             }
         }
 

@@ -50,12 +50,15 @@
   <ItemGroup>
     <Compile Include="DTO\CoinDTO.cs" />
     <Compile Include="DTO\DrinkDTO.cs" />
+    <Compile Include="DTO\PictureDTO.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ICoinService.cs" />
     <Compile Include="Interfaces\IDrinkService.cs" />
+    <Compile Include="Interfaces\IPictureService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CoinService.cs" />
     <Compile Include="Services\DrinkService.cs" />
+    <Compile Include="Services\PictureService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

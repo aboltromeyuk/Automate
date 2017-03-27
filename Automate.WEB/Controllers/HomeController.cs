@@ -23,6 +23,15 @@ namespace Automate.WEB.Controllers
 
         public ActionResult Index()
         {
+            //var drink = new DrinkViewModel
+            //{
+            //     Name="Colla",
+            //     Number=1,
+            //     Price=12
+            //};
+            //Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
+            //drinkService.Create(Mapper.Map<DrinkViewModel, DrinkDTO>(drink));
+
             var allDrinks = drinkService.GetDrinks();
 
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkViewModel>());

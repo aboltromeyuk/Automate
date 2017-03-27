@@ -17,6 +17,7 @@ namespace Automate.DAL.EF
 
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Coin> Coins { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
     }
 
 }

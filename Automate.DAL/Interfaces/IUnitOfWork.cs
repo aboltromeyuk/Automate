@@ -11,6 +11,7 @@ namespace Automate.DAL.Interfaces
     {
         IRepository<Drink> Drinks { get; }
         IRepository<Coin> Coins { get; }
+        IRepository<Picture> Pictures { get; }
         void Save();
     }
 }
