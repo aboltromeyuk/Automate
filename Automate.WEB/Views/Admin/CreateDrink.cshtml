@@ -24,12 +24,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PictureUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PictureId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(model => model.PictureUrl)
-                @Html.ValidationMessageFor(model => model.PictureUrl, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.PictureId)
+                @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
                 @Html.Raw("<img class='attachImg' style='width:80px; height:60px;'/>")
-                <input type="button" value="Добавить" class="btn btn-default" style="display:inline-block"/>
+                <input id="addImg" type="button" value="Добавить" class="btn btn-default" style="display:inline-block"/>
             </div>
         </div>
         

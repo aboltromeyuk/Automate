@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     
-    $(".btn").click(function () {
-        Content.openWindowRight();
+    $('#addImg').click(function () {
+        Content.openWindowRightAdmin();
     });
 
     $('#fond').click(function () {
@@ -9,13 +9,33 @@
     });
 
     $('#contentRight').on('click', 'img', function () {
-        $('#PictureUrl').val($(this).attr('id'));
+        $('#PictureId').val($(this).attr('id'));
         $('.attachImg').attr('src', $(this).attr('src'));
+    });
+
+    $('#inputMoney').click(function () {
+        Content.openWindowRightUser();
+    });
+
+    $('#contentRight').on('click', '.btn', function () {
+        Content.inputMoney($(this).val());
+    });
+
+    $('.imgDrink').click(function () {
+        var idDrink = $(this).data('index');
+        var numberDrink = $(this).siblings('.drinkNumber').html();
+        var priceDrink = $(this).siblings('.drinkPrice').html();
+        
+        if ($(this).siblings('.drinkNumber').html() !== "0" && Number(Content.getSum()) >= Number(priceDrink)){
+            $(this).siblings('.drinkNumber').html(numberDrink - 1);
+            Content.inputMoney(-priceDrink);
+        }
+        
     });
 });
 
 Content = {
-    openWindowRight: function () {
+    openWindowRightAdmin: function () {
         $.ajax({
             type: 'GET',
             url: '/Admin/Pictures',
@@ -29,9 +49,52 @@ Content = {
         });
     },
 
+    openWindowRightUser: function () {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/InputMoney',
+            async: true,
+            success: function (html) {
+                $('#contentRight').html(html);
+                Content.inputMoney(0);
+                $('#contentRight').show('slide', { direction: 'right' }, 500);
+                $('#fond').show('fade', 500);
+            },
+            error: function () { }
+        });
+    },
+
     closeWindowRight: function () {
 
         $('#contentRight').hide('slide', { direction: 'right' }, 500);
         $('#fond').hide('fade', 500);
     },
+
+    inputMoney: function (nominal) {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/InputMoney',
+            data: {nominal: nominal},
+            async: true,
+            success: function (html) {
+                $('#sum').html(html);
+            },
+            error: function () { }
+        });
+    },
+
+    getSum: function () {
+        var sum;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/InputMoney',
+            data: { nominal: 0 },
+            async:false,
+            success: function (html) {
+                sum = html;
+            },
+            error: function () { }
+        });
+        return sum;
+    }
 }

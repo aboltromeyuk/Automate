@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+Сумма: <div id="sum"></div> коп.
 @foreach (var coin in Model)
 {
     if (coin.Blocked)

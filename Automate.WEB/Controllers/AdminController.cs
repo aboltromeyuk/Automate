@@ -70,24 +70,28 @@ namespace Automate.WEB.Controllers
             if ((string)Session["access"] == "true")
             {
                 var drinkEditable = drinkService.GetDrink(id);
+                byte[] imageOfDrink = pictureService.GetPicture(drinkEditable.PictureId).Image;
 
-                Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkViewModel>());
-
-                return View(Mapper.Map<DrinkDTO, DrinkViewModel>(drinkEditable));
+                Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkWithImgViewModel>());
+                var resultDrink = Mapper.Map<DrinkDTO, DrinkWithImgViewModel>(drinkEditable);
+                resultDrink.Image = imageOfDrink;
+                return View(resultDrink);
             }
             else return HttpNotFound();
         }
 
         [HttpPost]
-        public ActionResult EditDrink(DrinkViewModel drink)
+        public ActionResult EditDrink(DrinkWithImgViewModel drink)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
+            Mapper.Initialize(cfg => cfg.CreateMap<DrinkWithImgViewModel, DrinkDTO>());
 
-            var drinkEditable = Mapper.Map<DrinkViewModel, DrinkDTO>(drink);
+            var drinkEditable = Mapper.Map<DrinkWithImgViewModel, DrinkDTO>(drink);
 
             drinkService.Update(drinkEditable);
+            
+            drink.Image= pictureService.GetPicture(drink.PictureId).Image;
 
-            return View();
+            return View(drink);
         }
 
         public ActionResult DeleteDrink(int id)

@@ -14,29 +14,37 @@ namespace Automate.WEB.Controllers
     {
         IDrinkService drinkService;
         ICoinService coinService;
+        IPictureService pictureService;
 
-        public HomeController(IDrinkService drinkServ, ICoinService coinServ)
+        public HomeController(IDrinkService drinkServ, ICoinService coinServ, IPictureService pictureServ)
         {
             drinkService = drinkServ;
             coinService = coinServ;
+            pictureService = pictureServ;
         }
 
         public ActionResult Index()
         {
             //var drink = new DrinkViewModel
             //{
-            //     Name="Colla",
-            //     Number=1,
-            //     Price=12
+            //    Name = "Colla",
+            //    Number = 1,
+            //    Price = 12
             //};
             //Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
             //drinkService.Create(Mapper.Map<DrinkViewModel, DrinkDTO>(drink));
 
             var allDrinks = drinkService.GetDrinks();
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkViewModel>());
+            Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkWithImgViewModel>());
+            var allDrinksWithImg = Mapper.Map<IEnumerable<DrinkDTO>, List<DrinkWithImgViewModel>>(allDrinks);
 
-            return View(Mapper.Map<IEnumerable<DrinkDTO>, List<DrinkViewModel>>(allDrinks));
+            foreach(var drink in allDrinksWithImg)
+            {
+                drink.Image = pictureService.GetPicture(drink.PictureId).Image;
+            }
+
+            return View(allDrinksWithImg);
         }
 
         public ActionResult InputMoney()
@@ -46,6 +54,28 @@ namespace Automate.WEB.Controllers
             Mapper.Initialize(cfg => cfg.CreateMap<CoinDTO, CoinViewModel>());
 
             return PartialView(Mapper.Map<IEnumerable<CoinDTO>, List<CoinViewModel>>(allCoins));
+        }
+
+        [HttpPost]
+        public HtmlString InputMoney(int nominal)
+        {
+            if (Session["sum"] == null)
+            {
+                Session["sum"] = 0;
+            }
+
+            Session["sum"] = (int)Session["sum"] + nominal;
+
+            if (nominal != 0)
+            {
+                var coin = coinService.GetCoinByNominal(nominal);
+                coin.Number += 1;
+                coinService.Update(coin);
+            }
+
+            HtmlString result = new HtmlString(Session["sum"].ToString());
+
+            return result;
         }
 
         protected override void Dispose(bool disposing)

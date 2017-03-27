@@ -229,6 +229,7 @@
     </Compile>
     <Compile Include="Models\CoinViewModel.cs" />
     <Compile Include="Models\DrinkViewModel.cs" />
+    <Compile Include="Models\DrinkWithImgViewModel.cs" />
     <Compile Include="Models\PictureViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />

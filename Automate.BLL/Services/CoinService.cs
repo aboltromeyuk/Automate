@@ -26,6 +26,13 @@ namespace Automate.BLL.Services
             return Mapper.Map<Coin, CoinDTO>(Database.Coins.Get(id));
         }
 
+        public CoinDTO GetCoinByNominal(int nominal)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<Coin, CoinDTO>());
+            var coin = Database.Coins.Find(c => c.Nominal == nominal).Single();
+            return Mapper.Map<Coin, CoinDTO>(coin);
+        }
+
         public IEnumerable<CoinDTO> GetCoins()
         {
             Mapper.Initialize(cfg => cfg.CreateMap<Coin, CoinDTO>());

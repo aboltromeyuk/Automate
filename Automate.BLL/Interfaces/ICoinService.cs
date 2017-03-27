@@ -10,6 +10,7 @@ namespace Automate.BLL.Interfaces
     public interface ICoinService
     {
         CoinDTO GetCoin(int id);
+        CoinDTO GetCoinByNominal(int nominal);
         IEnumerable<CoinDTO> GetCoins();
         void Create(CoinDTO coin);
         void Delete(int id);
