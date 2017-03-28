@@ -59,5 +59,46 @@ namespace Automate.BLL.Services
         {
             Database.Dispose();
         }
+
+        public IEnumerable<CoinDTO> ReturnChange(int sum)
+        {
+            int maxNominal = 0;
+            CoinDTO[] coins = this.GetCoins().ToArray();
+            var coinsOfChange = new List<CoinDTO>();
+            var coinTemp = new CoinDTO();
+            var sumTemp = sum;
+            int k = 0;
+
+            while (sumTemp != 0)
+            {
+                for(var i=0; i<coins.Length; i++)
+                {
+                    if (coins[i].Nominal > maxNominal && coins[i].Number > 0 && sumTemp >= coins[i].Nominal)
+                    {
+                        maxNominal = coins[i].Nominal;
+                        coinTemp = coins[i];
+                        k = i;
+                    }
+                    else if (i == coins.Length - 1 && maxNominal > sumTemp) return coinsOfChange;
+                }
+
+                    if (maxNominal <= sumTemp)
+                    {
+                        coinsOfChange.Add(new CoinDTO
+                        {
+                            Id = coinTemp.Id,
+                            Nominal = coinTemp.Nominal,
+                            Number = coinTemp.Number,
+                            Blocked = coinTemp.Blocked
+                        });
+
+                        coins[k].Nominal -= 1;
+                        sumTemp -= maxNominal;
+                    }
+                }
+            return coinsOfChange;
+        }
+        
+        }
     }
-}
+

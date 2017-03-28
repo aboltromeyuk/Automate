@@ -53,5 +53,21 @@ namespace Automate.BLL.Services
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, Drink>());
             Database.Drinks.Update(Mapper.Map<DrinkDTO, Drink>(drink));
         }
+
+        public void TakeDrinks(IEnumerable<DrinkDTO> drinks)
+        {
+            var userDrinks = new List<DrinkDTO>();
+
+            foreach(var drink in drinks.Distinct())
+            {
+                drink.Number -= drinks.Where(x => x.Equals(drink)).Count();
+                userDrinks.Add(drink);
+            }
+
+            foreach (var drink in userDrinks)
+            {
+                this.Update(drink);
+            }
+        }
     }
 }

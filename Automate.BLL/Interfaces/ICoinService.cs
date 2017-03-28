@@ -11,7 +11,9 @@ namespace Automate.BLL.Interfaces
     {
         CoinDTO GetCoin(int id);
         CoinDTO GetCoinByNominal(int nominal);
+        IEnumerable<CoinDTO> ReturnChange(int sum);
         IEnumerable<CoinDTO> GetCoins();
+        
         void Create(CoinDTO coin);
         void Delete(int id);
         void Update(CoinDTO coin);

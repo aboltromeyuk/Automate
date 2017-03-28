@@ -23,14 +23,23 @@
     });
 
     $('.imgDrink').click(function () {
+
         var idDrink = $(this).data('index');
+        var nameDrink=$(this).siblings('.drinkName').html();
         var numberDrink = $(this).siblings('.drinkNumber').html();
         var priceDrink = $(this).siblings('.drinkPrice').html();
-        
+        var pictureId = $(this).data('picid');
+
         if ($(this).siblings('.drinkNumber').html() !== "0" && Number(Content.getSum()) >= Number(priceDrink)){
             $(this).siblings('.drinkNumber').html(numberDrink - 1);
             Content.inputMoney(0, -priceDrink, 0);
+
+            Content.selectDrink(idDrink, nameDrink, pictureId, numberDrink, priceDrink);
         }
+    });
+
+    $('#getDrinks').click(function () {
+        Content.takeDrinks();
     });
 });
 
@@ -96,5 +105,26 @@ Content = {
             error: function () { }
         });
         return sum;
+    },
+
+    selectDrink: function (id, name, pictureId, number, price) {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SelectDrink',
+            async: true,
+            data:{ id: id, name: name, pictureId: pictureId, number: number, price: price },
+            success: function () { },
+            error: function () { }
+        });
+    },
+
+    takeDrinks: function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/TakeDrinks',
+            async: true,
+            success: function () { },
+            error: function () { }
+        });
     }
 }

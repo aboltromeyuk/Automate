@@ -60,10 +60,8 @@ namespace Automate.WEB.Controllers
         public HtmlString InputMoney(int id, int nominal, int number, bool blocked)
         {
             if (Session["sum"] == null)
-            {
                 Session["sum"] = 0;
-            }
-
+            
             Session["sum"] = (int)Session["sum"] + nominal;
 
             if (id != 0 )
@@ -85,7 +83,7 @@ namespace Automate.WEB.Controllers
             return result;
         }
 
-        public ActionResult TakeDrink(int id, string name, int pictureId, int number, int price)
+        public void SelectDrink(int id, string name, int pictureId, int number, int price)
         {
             var selectedDrink = new DrinkViewModel
             {
@@ -95,14 +93,19 @@ namespace Automate.WEB.Controllers
                  Number=number,
                  Price=price
             };
+                        
+            var cartObjects = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
+            cartObjects.Add(selectedDrink);
+            Session["CartObjects"] = cartObjects;
+        }
 
-            
-            return View();
-            
-            //Supply sup = Supplies.GetSupply(supplyItemID);
-            //var cartObjects = (Session["CartObjects"] as List<Supply>) ?? new List<Supply>();
-            //cartObjects.Add(sup);
-            //Session["CartObjects"] = cartObjects;
+        public void TakeDrinks()
+        {
+            var cartObjects = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
+
+            Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
+            drinkService.TakeDrinks(Mapper.Map<List<DrinkViewModel>, IEnumerable<DrinkDTO>>(cartObjects));
+            coinService.ReturnChange(Convert.ToInt32(Session["sum"]));
         }
 
         protected override void Dispose(bool disposing)

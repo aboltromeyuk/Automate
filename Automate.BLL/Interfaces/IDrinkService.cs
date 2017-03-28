@@ -14,6 +14,7 @@ namespace Automate.BLL.Interfaces
         void Create(DrinkDTO drink);
         void Delete(int id);
         void Update(DrinkDTO drink);
+        void TakeDrinks(IEnumerable<DrinkDTO> drinks);
         void Dispose();
     }
 }
