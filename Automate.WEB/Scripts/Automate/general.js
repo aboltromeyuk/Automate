@@ -18,7 +18,8 @@
     });
 
     $('#contentRight').on('click', '.btn', function () {
-        Content.inputMoney($(this).val());
+        Content.inputMoney($(this).data('index'), $(this).val(), $(this).data('number'));
+        $(this).data('number', Number($(this).data('number')) + 1);
     });
 
     $('.imgDrink').click(function () {
@@ -28,9 +29,8 @@
         
         if ($(this).siblings('.drinkNumber').html() !== "0" && Number(Content.getSum()) >= Number(priceDrink)){
             $(this).siblings('.drinkNumber').html(numberDrink - 1);
-            Content.inputMoney(-priceDrink);
+            Content.inputMoney(0, -priceDrink, 0);
         }
-        
     });
 });
 
@@ -56,7 +56,7 @@ Content = {
             async: true,
             success: function (html) {
                 $('#contentRight').html(html);
-                Content.inputMoney(0);
+                Content.inputMoney(0, 0, 0);
                 $('#contentRight').show('slide', { direction: 'right' }, 500);
                 $('#fond').show('fade', 500);
             },
@@ -70,11 +70,11 @@ Content = {
         $('#fond').hide('fade', 500);
     },
 
-    inputMoney: function (nominal) {
+    inputMoney: function (id, nominal, number) {
         $.ajax({
             type: 'POST',
             url: '/Home/InputMoney',
-            data: {nominal: nominal},
+            data: {id: id, nominal: nominal, number: number, blocked: false},
             async: true,
             success: function (html) {
                 $('#sum').html(html);
@@ -88,7 +88,7 @@ Content = {
         $.ajax({
             type: 'POST',
             url: '/Home/InputMoney',
-            data: { nominal: 0 },
+            data: { id: 0, nominal: 0, number: 0, blocked: false  },
             async:false,
             success: function (html) {
                 sum = html;

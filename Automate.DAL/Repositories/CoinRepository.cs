@@ -36,7 +36,7 @@ namespace Automate.DAL.Repositories
 
         public IEnumerable<Coin> Find(Func<Coin, bool> predicate)
         {
-            return db.Coins.Where(predicate).ToList();
+            return db.Coins.Where(predicate);
         }
 
         public Coin Get(int id)

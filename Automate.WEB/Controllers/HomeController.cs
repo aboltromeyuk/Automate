@@ -57,7 +57,7 @@ namespace Automate.WEB.Controllers
         }
 
         [HttpPost]
-        public HtmlString InputMoney(int nominal)
+        public HtmlString InputMoney(int id, int nominal, int number, bool blocked)
         {
             if (Session["sum"] == null)
             {
@@ -66,16 +66,43 @@ namespace Automate.WEB.Controllers
 
             Session["sum"] = (int)Session["sum"] + nominal;
 
-            if (nominal != 0)
+            if (id != 0 )
             {
-                var coin = coinService.GetCoinByNominal(nominal);
-                coin.Number += 1;
-                coinService.Update(coin);
+                var coin = new CoinViewModel
+                {
+                    Id = id,
+                    Nominal = nominal,
+                    Number = number + 1,
+                    Blocked = blocked
+                };
+
+                Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
+                coinService.Update(Mapper.Map<CoinViewModel, CoinDTO>(coin));
             }
 
             HtmlString result = new HtmlString(Session["sum"].ToString());
 
             return result;
+        }
+
+        public ActionResult TakeDrink(int id, string name, int pictureId, int number, int price)
+        {
+            var selectedDrink = new DrinkViewModel
+            {
+                 Id=id,
+                 Name=name,
+                 PictureId=pictureId,
+                 Number=number,
+                 Price=price
+            };
+
+            
+            return View();
+            
+            //Supply sup = Supplies.GetSupply(supplyItemID);
+            //var cartObjects = (Session["CartObjects"] as List<Supply>) ?? new List<Supply>();
+            //cartObjects.Add(sup);
+            //Session["CartObjects"] = cartObjects;
         }
 
         protected override void Dispose(bool disposing)

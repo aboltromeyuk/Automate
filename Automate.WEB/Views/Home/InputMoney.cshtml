@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-Сумма: <div id="sum"></div> коп.
+Сумма: <div id="sum" style="display:inline-block"></div>
+</br>
 @foreach (var coin in Model)
 {
     if (coin.Blocked)
@@ -9,6 +10,6 @@
     }
     else
     {
-         <input type="button" class="btn btn-default" value=@coin.Nominal />
+         <input type="button" class="btn btn-default" value=@coin.Nominal data-index="@coin.Id" data-number="@coin.Number" />
     }
 }
