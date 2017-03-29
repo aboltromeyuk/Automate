@@ -42,17 +42,20 @@ namespace Automate.BLL.Services
         {
             Mapper.Initialize(cfg => cfg.CreateMap<CoinDTO, Coin>());
             Database.Coins.Create(Mapper.Map<CoinDTO, Coin>(coin));
+            Database.Save();
         }
 
         public void Delete(int id)
         {
             Database.Coins.Delete(id);
+            Database.Save();
         }
 
         public void Update(CoinDTO coin)
         {
             Mapper.Initialize(cfg => cfg.CreateMap<CoinDTO, Coin>());
             Database.Coins.Update(Mapper.Map<CoinDTO, Coin>(coin));
+            Database.Save();
         }
 
         public void Dispose()
@@ -67,38 +70,51 @@ namespace Automate.BLL.Services
             var coinsOfChange = new List<CoinDTO>();
             var coinTemp = new CoinDTO();
             var sumTemp = sum;
-            int k = 0;
+            int iter = 0;
 
             while (sumTemp != 0)
             {
-                for(var i=0; i<coins.Length; i++)
+                for(int i=0; i<coins.Length; i++)
                 {
                     if (coins[i].Nominal > maxNominal && coins[i].Number > 0 && sumTemp >= coins[i].Nominal)
                     {
                         maxNominal = coins[i].Nominal;
                         coinTemp = coins[i];
-                        k = i;
+                        iter = i;
                     }
                     else if (i == coins.Length - 1 && maxNominal > sumTemp) return coinsOfChange;
                 }
 
-                    if (maxNominal <= sumTemp)
+                if (maxNominal <= sumTemp && maxNominal > 0)
+                {
+                    coinsOfChange.Add(new CoinDTO
                     {
-                        coinsOfChange.Add(new CoinDTO
-                        {
-                            Id = coinTemp.Id,
-                            Nominal = coinTemp.Nominal,
-                            Number = coinTemp.Number,
-                            Blocked = coinTemp.Blocked
-                        });
+                        Id = coinTemp.Id,
+                        Nominal = coinTemp.Nominal,
+                        Number = coinTemp.Number,
+                        Blocked = coinTemp.Blocked
+                    });
 
-                        coins[k].Nominal -= 1;
-                        sumTemp -= maxNominal;
-                    }
+                    coins[iter].Number -= 1;
+                    sumTemp -= maxNominal;
+                    maxNominal = 0;
                 }
+                else if (maxNominal == 0) break;
+                }
+
+            for (int i = 0; i < coins.Length; i++) this.Update(coins[i]);
+
             return coinsOfChange;
         }
-        
+
+        public int GetSumOfCoins(IEnumerable<CoinDTO> coins)
+        {
+            int sum = 0;
+
+            foreach (var coin in coins) sum += coin.Nominal;
+
+            return sum;
         }
     }
+}
 

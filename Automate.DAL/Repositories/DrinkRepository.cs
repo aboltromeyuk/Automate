@@ -22,7 +22,6 @@ namespace Automate.DAL.Repositories
         public void Create(Drink drink)
         {
             db.Drinks.Add(drink);
-            db.SaveChanges();
         }
 
         public void Delete(int id)
@@ -31,7 +30,6 @@ namespace Automate.DAL.Repositories
 
             if (drink != null)
                 db.Drinks.Remove(drink);
-            db.SaveChanges();
         }
 
         public IEnumerable<Drink> Find(Func<Drink, bool> predicate)
@@ -52,7 +50,6 @@ namespace Automate.DAL.Repositories
         public void Update(Drink drink)
         {
             db.Entry(drink).State = EntityState.Modified;
-            db.SaveChanges();
         }
     }
 }

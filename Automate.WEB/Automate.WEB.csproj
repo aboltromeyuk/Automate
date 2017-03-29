@@ -228,6 +228,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CoinViewModel.cs" />
+    <Compile Include="Models\DrinksWithChange.cs" />
     <Compile Include="Models\DrinkViewModel.cs" />
     <Compile Include="Models\DrinkWithImgViewModel.cs" />
     <Compile Include="Models\PictureViewModel.cs" />
@@ -254,6 +255,7 @@
     <Content Include="Views\Admin\Pictures.cshtml" />
     <Content Include="Views\Admin\CreatePicture.cshtml" />
     <Content Include="Views\Shared\_Layout_Admin.cshtml" />
+    <Content Include="Views\Home\TakeDrinks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

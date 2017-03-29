@@ -13,7 +13,7 @@ namespace Automate.BLL.Interfaces
         CoinDTO GetCoinByNominal(int nominal);
         IEnumerable<CoinDTO> ReturnChange(int sum);
         IEnumerable<CoinDTO> GetCoins();
-        
+        int GetSumOfCoins(IEnumerable<CoinDTO> coins);
         void Create(CoinDTO coin);
         void Delete(int id);
         void Update(CoinDTO coin);

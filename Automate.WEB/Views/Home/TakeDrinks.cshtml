@@ -1,0 +1,19 @@
+﻿@model Automate.WEB.Models.DrinksWithChange
+
+<h4>Напитки</h4>
+@foreach(var drink in Model.Drinks)
+{
+    @Html.DisplayFor(model=>drink.Name)
+}
+
+<h4>Монеты</h4>
+@foreach(var coin in Model.Change)
+{
+    @Html.DisplayFor(model=>coin.Nominal)
+}
+
+@if (Model.SumOfChange != 0)
+{
+    <div>Нет подходящего номинала, сумма долга: @Model.SumOfChange</div>
+}
+

@@ -22,7 +22,6 @@ namespace Automate.DAL.Repositories
         public void Create(Coin coin)
         {
             db.Coins.Add(coin);
-            db.SaveChanges();
         }
 
         public void Delete(int id)
@@ -31,12 +30,11 @@ namespace Automate.DAL.Repositories
 
             if (coin != null)
                 db.Coins.Remove(coin);
-            db.SaveChanges();
         }
 
         public IEnumerable<Coin> Find(Func<Coin, bool> predicate)
         {
-            return db.Coins.Where(predicate);
+            return db.Coins.AsNoTracking().Where(predicate);
         }
 
         public Coin Get(int id)
@@ -46,13 +44,14 @@ namespace Automate.DAL.Repositories
 
         public IEnumerable<Coin> GetAll()
         {
-            return db.Coins;
+            return db.Coins.AsNoTracking();
         }
 
         public void Update(Coin coin)
         {
             db.Entry(coin).State = EntityState.Modified;
-            db.SaveChanges();
         }
+
+        
     }
 }

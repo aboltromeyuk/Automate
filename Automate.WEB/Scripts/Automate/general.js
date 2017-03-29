@@ -18,23 +18,20 @@
     });
 
     $('#contentRight').on('click', '.btn', function () {
-        Content.inputMoney($(this).data('index'), $(this).val(), $(this).data('number'));
-        $(this).data('number', Number($(this).data('number')) + 1);
+        Content.inputMoney($(this).val());        
     });
 
     $('.imgDrink').click(function () {
 
         var idDrink = $(this).data('index');
-        var nameDrink=$(this).siblings('.drinkName').html();
         var numberDrink = $(this).siblings('.drinkNumber').html();
         var priceDrink = $(this).siblings('.drinkPrice').html();
-        var pictureId = $(this).data('picid');
-
+        
         if ($(this).siblings('.drinkNumber').html() !== "0" && Number(Content.getSum()) >= Number(priceDrink)){
             $(this).siblings('.drinkNumber').html(numberDrink - 1);
-            Content.inputMoney(0, -priceDrink, 0);
+            Content.inputMoney(-priceDrink);
 
-            Content.selectDrink(idDrink, nameDrink, pictureId, numberDrink, priceDrink);
+            Content.selectDrink(idDrink);
         }
     });
 
@@ -65,7 +62,7 @@ Content = {
             async: true,
             success: function (html) {
                 $('#contentRight').html(html);
-                Content.inputMoney(0, 0, 0);
+                Content.inputMoney(0);
                 $('#contentRight').show('slide', { direction: 'right' }, 500);
                 $('#fond').show('fade', 500);
             },
@@ -79,11 +76,11 @@ Content = {
         $('#fond').hide('fade', 500);
     },
 
-    inputMoney: function (id, nominal, number) {
+    inputMoney: function (nominal) {
         $.ajax({
             type: 'POST',
             url: '/Home/InputMoney',
-            data: {id: id, nominal: nominal, number: number, blocked: false},
+            data: {nominal: nominal},
             async: true,
             success: function (html) {
                 $('#sum').html(html);
@@ -107,12 +104,12 @@ Content = {
         return sum;
     },
 
-    selectDrink: function (id, name, pictureId, number, price) {
+    selectDrink: function (id) {
         $.ajax({
             type: 'POST',
             url: '/Home/SelectDrink',
             async: true,
-            data:{ id: id, name: name, pictureId: pictureId, number: number, price: price },
+            data:{ id: id },
             success: function () { },
             error: function () { }
         });
@@ -123,7 +120,9 @@ Content = {
             type: 'POST',
             url: '/Home/TakeDrinks',
             async: true,
-            success: function () { },
+            success: function (html) {
+                $('#cart').html(html);
+            },
             error: function () { }
         });
     }

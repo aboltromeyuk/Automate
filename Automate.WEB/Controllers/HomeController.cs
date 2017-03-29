@@ -57,25 +57,19 @@ namespace Automate.WEB.Controllers
         }
 
         [HttpPost]
-        public HtmlString InputMoney(int id, int nominal, int number, bool blocked)
+        public HtmlString InputMoney(int nominal)
         {
             if (Session["sum"] == null)
                 Session["sum"] = 0;
             
             Session["sum"] = (int)Session["sum"] + nominal;
 
-            if (id != 0 )
+            if (nominal > 0 )
             {
-                var coin = new CoinViewModel
-                {
-                    Id = id,
-                    Nominal = nominal,
-                    Number = number + 1,
-                    Blocked = blocked
-                };
+                var coin = coinService.GetCoinByNominal(nominal);
+                coin.Number += 1;
 
-                Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
-                coinService.Update(Mapper.Map<CoinViewModel, CoinDTO>(coin));
+                coinService.Update(coin);
             }
 
             HtmlString result = new HtmlString(Session["sum"].ToString());
@@ -83,29 +77,47 @@ namespace Automate.WEB.Controllers
             return result;
         }
 
-        public void SelectDrink(int id, string name, int pictureId, int number, int price)
+        public void SelectDrink(int id)
         {
-            var selectedDrink = new DrinkViewModel
-            {
-                 Id=id,
-                 Name=name,
-                 PictureId=pictureId,
-                 Number=number,
-                 Price=price
-            };
-                        
+            
+            var selectedDrink = drinkService.GetDrink(id);
+                                   
             var cartObjects = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
-            cartObjects.Add(selectedDrink);
+            Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkViewModel>());
+            cartObjects.Add(Mapper.Map<DrinkDTO, DrinkViewModel>(selectedDrink));
             Session["CartObjects"] = cartObjects;
         }
 
-        public void TakeDrinks()
+        public ActionResult TakeDrinks()
         {
-            var cartObjects = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
+            var cartDrinks = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();                
 
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
-            drinkService.TakeDrinks(Mapper.Map<List<DrinkViewModel>, IEnumerable<DrinkDTO>>(cartObjects));
-            coinService.ReturnChange(Convert.ToInt32(Session["sum"]));
+            drinkService.TakeDrinks(Mapper.Map<List<DrinkViewModel>, IEnumerable<DrinkDTO>>(cartDrinks));
+
+            Session["CartObjects"] = "";
+
+            var coinsInChange = coinService.ReturnChange(Convert.ToInt32(Session["sum"]));
+
+            var change = (int)Session["sum"] - coinService.GetSumOfCoins(coinsInChange);
+            Session["sum"] = change;
+
+            var allChange = true;
+
+            if (change != 0) { allChange = false; }
+
+            Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkWithImgViewModel>());
+            Mapper.Initialize(cfg => cfg.CreateMap<CoinDTO, CoinViewModel>());
+
+            var drinksOfUser = new DrinksWithChange
+            {
+                AllChange = allChange,
+                SumOfChange = change,
+                Drinks = cartDrinks,
+                Change = Mapper.Map<IEnumerable<CoinDTO>, List<CoinViewModel>>(coinsInChange)
+            };
+
+            return PartialView(drinksOfUser);
         }
 
         protected override void Dispose(bool disposing)

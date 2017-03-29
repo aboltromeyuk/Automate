@@ -24,11 +24,13 @@ namespace Automate.BLL.Services
         {
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, Drink>());
             Database.Drinks.Create(Mapper.Map<DrinkDTO, Drink>(drink));
+            Database.Save();
         }
 
         public void Delete(int id)
         {
             Database.Drinks.Delete(id);
+            Database.Save();
         }
 
         public void Dispose()
@@ -52,6 +54,7 @@ namespace Automate.BLL.Services
         {
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, Drink>());
             Database.Drinks.Update(Mapper.Map<DrinkDTO, Drink>(drink));
+            Database.Save();
         }
 
         public void TakeDrinks(IEnumerable<DrinkDTO> drinks)
@@ -67,6 +70,7 @@ namespace Automate.BLL.Services
             foreach (var drink in userDrinks)
             {
                 this.Update(drink);
+                Database.Save();
             }
         }
     }
