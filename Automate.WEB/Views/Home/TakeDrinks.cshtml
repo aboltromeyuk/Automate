@@ -3,17 +3,18 @@
 <h4>Напитки</h4>
 @foreach(var drink in Model.Drinks)
 {
-    @Html.DisplayFor(model=>drink.Name)
+    @Html.DisplayFor(model => drink.Name);<br />
 }
 
-<h4>Монеты</h4>
+<h4>Сдача</h4>
 @foreach(var coin in Model.Change)
 {
-    @Html.DisplayFor(model=>coin.Nominal)
+    @Html.DisplayFor(model => coin.Nominal);<h5 style="display:inline-block">коп.</h5>
 }
 
 @if (Model.SumOfChange != 0)
 {
-    <div>Нет подходящего номинала, сумма долга: @Model.SumOfChange</div>
+    <h4 style="display:inline-block">Нет подходящего номинала, сумма долга: @Model.SumOfChange</h4> <h4 style="display:inline-block">коп.</h4>
+    <h5>Обратитесь к администратору или воспользуйтесь данной суммой</h5> 
 }
 

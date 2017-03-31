@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Automate.DAL.Repositories
 {
+    /// <summary>
+    /// Repository of pictures
+    /// and CRUD
+    /// </summary>
     public class PictureRepository : IRepository<Picture>
     {
         private AutomateContext db;

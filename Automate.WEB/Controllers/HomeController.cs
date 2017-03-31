@@ -25,15 +25,6 @@ namespace Automate.WEB.Controllers
 
         public ActionResult Index()
         {
-            //var drink = new DrinkViewModel
-            //{
-            //    Name = "Colla",
-            //    Number = 1,
-            //    Price = 12
-            //};
-            //Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
-            //drinkService.Create(Mapper.Map<DrinkViewModel, DrinkDTO>(drink));
-
             var allDrinks = drinkService.GetDrinks();
 
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkWithImgViewModel>());
@@ -79,7 +70,6 @@ namespace Automate.WEB.Controllers
 
         public void SelectDrink(int id)
         {
-            
             var selectedDrink = drinkService.GetDrink(id);
                                    
             var cartObjects = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
@@ -90,8 +80,8 @@ namespace Automate.WEB.Controllers
 
         public ActionResult TakeDrinks()
         {
-            var cartDrinks = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();                
-
+            var cartDrinks = (Session["CartObjects"] as List<DrinkViewModel>) ?? new List<DrinkViewModel>();
+            int change = 0;
             Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
             drinkService.TakeDrinks(Mapper.Map<List<DrinkViewModel>, IEnumerable<DrinkDTO>>(cartDrinks));
 
@@ -99,8 +89,11 @@ namespace Automate.WEB.Controllers
 
             var coinsInChange = coinService.ReturnChange(Convert.ToInt32(Session["sum"]));
 
-            var change = (int)Session["sum"] - coinService.GetSumOfCoins(coinsInChange);
-            Session["sum"] = change;
+            if (coinsInChange.Count() != 0)
+            {
+                change = (int)Session["sum"] - coinService.GetSumOfCoins(coinsInChange);
+                Session["sum"] = change;
+            }
 
             var allChange = true;
 

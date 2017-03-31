@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
 
 @{
-    ViewBag.Title = "Coins";
+    ViewBag.Title = "Монеты";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>Coins</h2>
+<h2>Монеты</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateCoin")
+    @Html.ActionLink("Добавить", "CreateCoin") |
+    @Html.ActionLink("Напитки", "Drinks")
 </p>
 <table class="table">
     <tr>
@@ -36,8 +37,8 @@
             @Html.DisplayFor(modelItem => item.Blocked)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditCoin", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteCoin", new { id=item.Id })
+            @Html.ActionLink("Изменить", "EditCoin", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "DeleteCoin", new { id=item.Id })
         </td>
     </tr>
 }

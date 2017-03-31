@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+
 namespace Automate.WEB.Controllers
 {
     public class AdminController : Controller
@@ -23,7 +25,7 @@ namespace Automate.WEB.Controllers
             coinService = coinServ;
             pictureService = pictureServ;
         }
-        
+                
         public ActionResult Index(string key)
         {
             if (key == "automate" || (string)Session["access"] == "true")
@@ -59,10 +61,14 @@ namespace Automate.WEB.Controllers
         [HttpPost]
         public ActionResult CreateDrink(DrinkViewModel drink)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
-            drinkService.Create(Mapper.Map<DrinkViewModel, DrinkDTO>(drink));
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<DrinkViewModel, DrinkDTO>());
+                drinkService.Create(Mapper.Map<DrinkViewModel, DrinkDTO>(drink));
+                return View();
+            }
 
-            return View();
+            return View(drink);
         }
 
         public ActionResult EditDrink(int id)
@@ -70,8 +76,9 @@ namespace Automate.WEB.Controllers
             if ((string)Session["access"] == "true")
             {
                 var drinkEditable = drinkService.GetDrink(id);
+                
                 byte[] imageOfDrink = pictureService.GetPicture(drinkEditable.PictureId).Image;
-
+                
                 Mapper.Initialize(cfg => cfg.CreateMap<DrinkDTO, DrinkWithImgViewModel>());
                 var resultDrink = Mapper.Map<DrinkDTO, DrinkWithImgViewModel>(drinkEditable);
                 resultDrink.Image = imageOfDrink;
@@ -83,13 +90,18 @@ namespace Automate.WEB.Controllers
         [HttpPost]
         public ActionResult EditDrink(DrinkWithImgViewModel drink)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DrinkWithImgViewModel, DrinkDTO>());
+            drink.Image = pictureService.GetPicture(drink.PictureId).Image;
 
-            var drinkEditable = Mapper.Map<DrinkWithImgViewModel, DrinkDTO>(drink);
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<DrinkWithImgViewModel, DrinkDTO>());
 
-            drinkService.Update(drinkEditable);
-            
-            drink.Image= pictureService.GetPicture(drink.PictureId).Image;
+                var drinkEditable = Mapper.Map<DrinkWithImgViewModel, DrinkDTO>(drink);
+
+                drinkService.Update(drinkEditable);
+
+                return RedirectToAction("Drinks");
+            }
 
             return View(drink);
         }
@@ -129,10 +141,15 @@ namespace Automate.WEB.Controllers
         [HttpPost]
         public ActionResult CreateCoin(CoinViewModel coin)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
-            coinService.Create(Mapper.Map<CoinViewModel, CoinDTO>(coin));
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
+                coinService.Create(Mapper.Map<CoinViewModel, CoinDTO>(coin));
 
-            return View();
+                return View();
+            }
+
+            return View(coin);
         }
 
         public ActionResult EditCoin(int id)
@@ -151,13 +168,18 @@ namespace Automate.WEB.Controllers
         [HttpPost]
         public ActionResult EditCoin(CoinViewModel coin)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<CoinViewModel, CoinDTO>());
 
-            var coinEditable = Mapper.Map<CoinViewModel, CoinDTO>(coin);
+                var coinEditable = Mapper.Map<CoinViewModel, CoinDTO>(coin);
 
-            coinService.Update(coinEditable);
+                coinService.Update(coinEditable);
 
-            return View();
+                return RedirectToAction("Coins");
+            }
+
+            return View(coin);
         }
 
         public ActionResult DeleteCoin(int id)
@@ -186,7 +208,12 @@ namespace Automate.WEB.Controllers
 
         public ActionResult CreatePicture()
         {
-            return View();
+            if ((string)Session["access"] == "true")
+            {
+                return PartialView();
+            }
+
+            return HttpNotFound(); 
         }
 
         [HttpPost]
@@ -196,9 +223,9 @@ namespace Automate.WEB.Controllers
             {
                 byte[] imageData = null;
 
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))        // reading uploadImage
                 {
-                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);          //uploadImage data to byte[]
                 }
 
                 picture.Image = imageData;
@@ -210,6 +237,46 @@ namespace Automate.WEB.Controllers
                 return View();
             }
             return View();
+        }
+
+        public ActionResult ImportDrinks()
+        {
+            if ((string)Session["access"] == "true")
+            {
+                return View();
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult ImportDrinks(HttpPostedFileBase excelfile)
+        {
+            if(excelfile==null || excelfile.ContentLength == 0)  
+            {
+                ViewBag.Error = "Пожалуйста, выберите excel файл<br/>";
+                return View();
+            }
+            else
+            {
+                if(excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+                {
+                    string path = Server.MapPath("~/Files/" + excelfile.FileName);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
+                    excelfile.SaveAs(path);
+
+                    drinkService.ImportDrinks(path);
+
+                    return RedirectToAction("Drinks");
+                }
+                else
+                {
+                    ViewBag.Error = "Неверный формат файла<br/>";
+                    return View();
+                }
+            }
+
         }
 
         protected override void Dispose(bool disposing)

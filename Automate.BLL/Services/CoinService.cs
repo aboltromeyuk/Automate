@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Automate.BLL.Services
 {
+    /// <summary>
+    /// Service for coins
+    /// and CRUD
+    /// </summary>
     public class CoinService : ICoinService
     {
         IUnitOfWork Database { get; set; }
@@ -63,6 +67,11 @@ namespace Automate.BLL.Services
             Database.Dispose();
         }
 
+        /// <summary>
+        /// Method return list of CoinDTO 
+        /// who insert change 
+        /// </summary>
+
         public IEnumerable<CoinDTO> ReturnChange(int sum)
         {
             int maxNominal = 0;
@@ -76,16 +85,16 @@ namespace Automate.BLL.Services
             {
                 for(int i=0; i<coins.Length; i++)
                 {
-                    if (coins[i].Nominal > maxNominal && coins[i].Number > 0 && sumTemp >= coins[i].Nominal)
+                    if (coins[i].Nominal > maxNominal && coins[i].Number > 0 && sumTemp >= coins[i].Nominal)    //search max nominal for this sum
                     {
                         maxNominal = coins[i].Nominal;
                         coinTemp = coins[i];
                         iter = i;
                     }
-                    else if (i == coins.Length - 1 && maxNominal > sumTemp) return coinsOfChange;
+                    else if (i == coins.Length - 1 && maxNominal > sumTemp) return coinsOfChange;   // if no right => return current coinsOfChange
                 }
 
-                if (maxNominal <= sumTemp && maxNominal > 0)
+                if (maxNominal <= sumTemp && maxNominal > 0)    //add coin with maxNominal if he is correct        
                 {
                     coinsOfChange.Add(new CoinDTO
                     {
@@ -95,14 +104,14 @@ namespace Automate.BLL.Services
                         Blocked = coinTemp.Blocked
                     });
 
-                    coins[iter].Number -= 1;
-                    sumTemp -= maxNominal;
+                    coins[iter].Number -= 1;    //decrement of number current coin (with nominal=maxNominal)
+                    sumTemp -= maxNominal;      //remaining sum
                     maxNominal = 0;
                 }
                 else if (maxNominal == 0) break;
                 }
 
-            for (int i = 0; i < coins.Length; i++) this.Update(coins[i]);
+            for (int i = 0; i < coins.Length; i++) this.Update(coins[i]);   //updating coins(updating number)
 
             return coinsOfChange;
         }

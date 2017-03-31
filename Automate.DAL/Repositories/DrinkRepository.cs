@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Automate.DAL.Repositories
 {
+    /// <summary>
+    /// Repository of drinks
+    /// and CRUD
+    /// </summary>
     public class DrinkRepository : IRepository<Drink>
     {
         private AutomateContext db;

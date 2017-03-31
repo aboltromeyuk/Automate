@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Automate.DAL.Repositories
 {
+    /// <summary>
+    /// Class for access to db 
+    /// (have constructor who take string of name connect to db)
+    /// </summary>
     public class EFUnitOfWork : IUnitOfWork
     {
         private AutomateContext db;

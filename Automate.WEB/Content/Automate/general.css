@@ -26,8 +26,25 @@
     margin-top: -50px;
 }
 
+#cart{
+    margin:auto;
+}
+
+#inputMoney{
+    margin:auto;
+}
+
+.inputMoney{
+    margin-top: 30%;
+    margin-left: 25%;
+}
+
+#getDrinks{
+    margin:auto;
+}
+
 .showcase{
-    width: 400px;
+    width: 700px;
     margin: auto;
 }
 .drinkItem{
@@ -36,9 +53,9 @@
     padding: 10px;
     display: inline-block;
     vertical-align: bottom;
-    width: 100px;
+    width: 130px;
 }
 .imgDrink img{
     width: 90px;
-    height: 90px;
+    height: 100px;
 }

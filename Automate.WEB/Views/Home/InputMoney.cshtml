@@ -1,15 +1,26 @@
 ﻿@model IEnumerable<Automate.WEB.Models.CoinViewModel>
+
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-Сумма: <div id="sum" style="display:inline-block"></div>
-</br>
-@foreach (var coin in Model)
-{
-    if (coin.Blocked)
-    {
-         <input type="button" class="btn btn-default" disabled value=@coin.Nominal />
-    }
-    else
-    {
-         <input type="button" class="btn btn-default" value=@coin.Nominal data-index="@coin.Id" data-number="@coin.Number" />
-    }
-}
+<link href="~/Content/Automate/general.css" rel="stylesheet" />
+<div class="inputMoney">
+    
+    <img src="~/Files/money.png"/>
+    <br/>
+    <br/>
+    <div class="coinsButtom">
+        <h5 style="display:inline-block">Введенная сумма:</h5> <div id="sum" style="display:inline-block"></div><h5 style="display:inline-block"> коп.</h5>
+        <br />
+
+        @foreach (var coin in Model)
+        {
+            if (coin.Blocked)
+            {
+                <input type="button" class="btn btn-default" disabled value=@coin.Nominal />
+            }
+            else
+            {
+                <input type="button" class="btn btn-default" value=@coin.Nominal data-index="@coin.Id" data-number="@coin.Number" />
+            }
+        }
+    </div>
+</div>

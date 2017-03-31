@@ -1,18 +1,18 @@
 ﻿@model Automate.WEB.Models.DrinkViewModel
 
 @{
-    ViewBag.Title = "CreateDrink";
+    ViewBag.Title = "Добавить";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>CreateDrink</h2>
+<h2>Добавить напиток</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>DrinkViewModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -28,7 +28,7 @@
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.PictureId)
                 @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
-                @Html.Raw("<img class='attachImg' style='width:80px; height:60px;'/>")
+                @Html.Raw("<img class='attachImg' style='width:80px; height:80px;'/>")
                 <input id="addImg" type="button" value="Добавить" class="btn btn-default" style="display:inline-block"/>
             </div>
         </div>
@@ -51,12 +51,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Drinks")
 </div>

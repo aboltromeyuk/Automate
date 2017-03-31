@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Импорт напитков";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Импорт напитков</h2>
+<p>
+    @Html.ActionLink("Напитки", "Drinks") |
+    @Html.ActionLink("Монеты", "Coins")
+</p>
+
+@using (Html.BeginForm("ImportDrinks", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.Raw(ViewBag.Error)
+
+        <div class="form-group">
+            @Html.Label("Excel файл", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="excelfile" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Импорт" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+
+
+
+
+
+

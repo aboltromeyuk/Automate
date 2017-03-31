@@ -11,6 +11,10 @@ using Automate.DAL.Entities;
 
 namespace Automate.BLL.Services
 {
+    /// <summary>
+    /// Service for coin
+    /// and CRUD
+    /// </summary>
     public class PictureService : IPictureService
     {
         IUnitOfWork Database { get; set; }

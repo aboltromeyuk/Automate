@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<Automate.WEB.Models.DrinkViewModel>
 
 @{
-    ViewBag.Title = "Drinks";
+    ViewBag.Title = "Напитки";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>Drinks</h2>
+<h2>Напитки</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateDrink")
+    @Html.ActionLink("Добавить", "CreateDrink") |
+    @Html.ActionLink("Монеты", "Coins") |
+    @Html.ActionLink("Импорт напитков", "ImportDrinks") |
+    @Html.ActionLink("Импорт картинок", "CreatePicture")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PictureId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Number)
@@ -33,17 +33,14 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PictureId)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Number)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditDrink", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteDrink", new { id=item.Id })
+            @Html.ActionLink("Изменить", "EditDrink", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "DeleteDrink", new { id=item.Id })
         </td>
     </tr>
 }

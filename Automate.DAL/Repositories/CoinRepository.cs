@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Automate.DAL.Repositories
 {
+    /// <summary>
+    /// Repository of coins
+    /// and CRUD
+    /// </summary>
     public class CoinRepository : IRepository<Coin>
     {
         private AutomateContext db;
@@ -51,7 +55,6 @@ namespace Automate.DAL.Repositories
         {
             db.Entry(coin).State = EntityState.Modified;
         }
-
         
     }
 }

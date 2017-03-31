@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Automate.DAL.Interfaces
 {
+    /// <summary>
+    /// Interface for all repositories
+    /// </summary>
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();

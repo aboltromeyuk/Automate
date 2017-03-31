@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Automate.BLL.Infrastructure
 {
+    /// <summary>
+    /// Module Ninject for kernel in 
+    /// view layer
+    /// </summary>
     public class ServiceModule : NinjectModule
     {
         private string connectionString;

@@ -1,18 +1,17 @@
 ﻿@model Automate.WEB.Models.CoinViewModel
 
 @{
-    ViewBag.Title = "CreateCoin";
+    ViewBag.Title = "Добавить";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>CreateCoin</h2>
+<h2>Добавить монету</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CoinViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -43,12 +42,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Coins")
 </div>

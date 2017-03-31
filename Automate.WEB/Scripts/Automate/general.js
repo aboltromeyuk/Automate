@@ -13,6 +13,10 @@
         $('.attachImg').attr('src', $(this).attr('src'));
     });
 
+    $('#contentRight').on('click', '#dowloadImg', function () {
+        Content.downloadImg();
+    });
+
     $('#inputMoney').click(function () {
         Content.openWindowRightUser();
     });
@@ -125,5 +129,18 @@ Content = {
             },
             error: function () { }
         });
+    },
+
+    downloadImg: function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/CreatePicture',
+            async: true,
+            success: function (html) {
+                $('.download').html(html);
+            },
+            error: function () { }
+        });
     }
+    
 }

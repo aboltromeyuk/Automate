@@ -9,6 +9,9 @@ using System.Web.Mvc;
 
 namespace Automate.WEB.Util
 {
+    /// <summary>
+    /// Dependency injection 
+    /// </summary>
     public class NinjectDependencyResolver : IDependencyResolver
     {
         private IKernel kernel;
